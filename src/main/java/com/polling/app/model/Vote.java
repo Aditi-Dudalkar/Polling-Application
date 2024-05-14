@@ -14,19 +14,26 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 public class Vote {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "poll_id")
     private Poll poll;
 
     private String selectedOption;
 
     private String voterName;
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
 }
 

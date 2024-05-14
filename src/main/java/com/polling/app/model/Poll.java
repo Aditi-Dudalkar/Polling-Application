@@ -28,6 +28,12 @@ public class Poll {
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
     private List<Vote> votes;
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
 }

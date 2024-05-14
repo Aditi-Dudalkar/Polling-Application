@@ -1,22 +1,25 @@
-// package com.polling.app.service;
+package com.polling.app.service;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
+import java.util.List;
 
-// @Service
-// public class PollService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-//     @Autowired
-//     private PollRepository pollRepository;
+import com.polling.app.model.Poll;
+import com.polling.app.repository.PollRepository;
 
-//     public List<Poll> getAllPolls() {
-//         return pollRepository.findAll();
-//     }
+@Service
+public class PollService {
 
-//     public Poll createPoll(Poll poll) {
-//         return pollRepository.save(poll);
-//     }
+    @Autowired
+    private PollRepository pollRepository;
 
-//     // Add more methods as needed
+    public List<Poll> getAllPolls() {
+        return pollRepository.findAll();
+    }
 
-// }
+    public Poll createPoll(Poll poll) {
+        return pollRepository.save(poll);
+    }
+
+}

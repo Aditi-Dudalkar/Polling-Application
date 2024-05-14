@@ -1,19 +1,35 @@
-// package com.polling.app.service;
+package com.polling.app.service;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-// @Service
-// public class VoteService {
+import com.polling.app.exception.PollNotFoundException;
+import com.polling.app.model.Poll;
+import com.polling.app.model.Vote;
+import com.polling.app.repository.VoteRepository;
+import com.polling.app.repository.PollRepository;
 
-//     @Autowired
-//     private VoteRepository voteRepository;
+@Service
+public class VoteService {
 
-//     public void vote(Vote vote) {
-//         // You can add validation logic here, e.g., checking if the user has already voted
-//         voteRepository.save(vote);
-//     }
+    @Autowired
+    private VoteRepository voteRepository;
 
-//     // Add more methods as needed
+    @Autowired
+    private PollRepository pollRepository;
 
-// }
+    public void vote(Vote vote) {
+        // Fetch the poll entity using pollId
+        Poll poll = pollRepository.findById(vote.getPoll().getId()).orElse(null);
+        if (poll == null) {
+            // Handle case where poll with given ID is not found
+            throw new PollNotFoundException("Poll not found for ID: " + vote.getPoll().getId());
+        }
+        System.out.println("poll: "+ poll);
+        // Set the poll attribute of the vote entity
+        vote.setPoll(poll);
+        System.out.println("vote: "+ vote);
+        // Save the vote entity
+        voteRepository.save(vote);
+    }
+}
