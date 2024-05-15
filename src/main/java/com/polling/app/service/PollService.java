@@ -1,5 +1,6 @@
 package com.polling.app.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,15 @@ public class PollService {
 
     public Poll createPoll(Poll poll) {
         return pollRepository.save(poll);
+    }
+
+    public List<Poll> getPollsBetweenDates(LocalDateTime startDate, LocalDateTime endDate) {
+        return pollRepository.findByCreatedAtBetween(startDate, endDate);
+    }
+
+    public Poll getPollById(Long pollId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPollById'");
     }
 
 }
