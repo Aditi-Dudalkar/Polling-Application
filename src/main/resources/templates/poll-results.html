@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Poll Results</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <h1>Poll Results</h1>
+    <!-- Your HTML content for displaying poll results goes here -->
+    <div th:each="poll : ${polls}">
+        <h2 th:text="${poll.question}"></h2>
+        <!-- Display poll options and vote counts -->
+        <ul>
+            <li th:each="option : ${poll.options}" th:text="${option}"></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vote</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <h1>Vote</h1>
+    <!-- Display the question fetched from the model -->
+    <p th:text="${poll.question}"></p>
+    
+    <!-- Display options as radio buttons -->
+    <form th:action="@{/vote}" method="post">
+        <div th:each="option : ${poll.options}">
+            <input type="radio" th:id="${option}" th:name="selectedOption" th:value="${option}">
+            <label th:for="${option}" th:text="${option}"></label><br>
+        </div>
+        <input type="submit" value="Vote">
+    </form>
+</body>
+</html>
