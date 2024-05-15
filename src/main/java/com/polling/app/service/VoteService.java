@@ -25,11 +25,10 @@ public class VoteService {
             // Handle case where poll with given ID is not found
             throw new PollNotFoundException("Poll not found for ID: " + vote.getPoll().getId());
         }
-        System.out.println("poll: "+ poll);
         // Set the poll attribute of the vote entity
         vote.setPoll(poll);
-        System.out.println("vote: "+ vote);
         // Save the vote entity
         voteRepository.save(vote);
     }
+
 }
