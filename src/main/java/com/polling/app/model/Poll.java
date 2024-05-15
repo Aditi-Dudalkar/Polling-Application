@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -26,6 +29,7 @@ public class Poll {
     private List<String> options;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Vote> votes;
 
     @Column(nullable = false)

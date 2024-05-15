@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -21,6 +23,7 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "poll_id")
+    @JsonBackReference
     private Poll poll;
 
     private String selectedOption;
