@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Polls</title>
+</head>
+<body>
+    <h1>Polls</h1>
+    <ul>
+        <li th:each="poll : ${polls}">
+            <h2 th:text="${poll.question}"></h2>
+            <ul>
+                <li th:each="option : ${poll.options}" th:text="${option}"></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

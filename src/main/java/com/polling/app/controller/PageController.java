@@ -35,5 +35,12 @@ public class PageController {
         return "vote"; // Return the name of the Thymeleaf template without the ".html" extension
     }
 
+    @GetMapping("/polls")
+    public String getAllPolls(Model model) {
+        List<Poll> polls = pollService.getAllPolls();
+        model.addAttribute("polls", polls);
+        return "polls"; // This corresponds to the name of your Thymeleaf template (e.g., "polls.html")
+    }
+
 }
 
