@@ -1,5 +1,7 @@
 package com.polling.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,11 @@ public class VoteController {
     private VoteService voteService;
 
     @PostMapping("/votes")
-    public ResponseEntity<Void> vote(@RequestBody Vote vote) {
-        voteService.vote(vote);
+    public ResponseEntity<Void> vote(@RequestBody List<Vote> votes) {
+        voteService.vote(votes);
         return ResponseEntity.ok().build();
     }
+
     
 }
 

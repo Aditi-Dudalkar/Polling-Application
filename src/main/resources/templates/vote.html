@@ -1,22 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Vote</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
     <h1>Vote</h1>
-    <!-- Display the question fetched from the model -->
-    <p th:text="${poll.question}"></p>
-    
-    <!-- Display options as radio buttons -->
-    <form th:action="@{/vote}" method="post">
-        <div th:each="option : ${poll.options}">
-            <input type="radio" th:id="${option}" th:name="selectedOption" th:value="${option}">
-            <label th:for="${option}" th:text="${option}"></label><br>
+    <form id="voteForm" th:action="@{/submit-votes}" method="post">
+        <div id="pollQuestions">
+            <div th:each="poll : ${polls}">
+                <h3 th:text="${poll.question}"></h3>
+                <div th:each="option : ${poll.options}">
+                    <input type="radio" th:id="${option}" th:name="'selectedOptions[' + ${poll.id} + '][selectedOption]'" th:value="${option}">
+                    <label th:for="${option}" th:text="${option}"></label><br>
+                </div>
+                <br>
+            </div>
         </div>
-        <input type="submit" value="Vote">
+        <br>
+        <label for="voterName">Your Name:</label>
+        <input type="text" id="voterName" name="voterName" required><br><br>
+        <button type="submit">Submit Votes</button>
     </form>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.getElementById("voteForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Construct array of votes from form data
+            const votes = [];
+            const voterName = document.getElementById("voterName").value;
+
+            document.querySelectorAll('input[type="radio"]:checked').forEach(radioButton => {
+                const pollId = radioButton.name.split('[')[1].split(']')[0];
+                const selectedOption = radioButton.value;
+                votes.push({
+                    poll: { id: pollId },
+                    selectedOption: selectedOption,
+                    voterName: voterName
+                });
+            });
+            // Send votes to backend using Fetch API
+            fetch("/api/votes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(votes)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to submit votes. Please try again later.");
+                }
+                // Parse the JSON response
+                console.log("response json: ", response.json());
+                return response.json();
+            })
+            .then(data => {
+                console.log("Response data:", data); // Handle successful response
+                alert("Votes submitted successfully!");
+                // Redirect or perform any other action as needed
+            })
+            .catch(error => {
+                console.error("There was a problem with your fetch operation:", error); // Log the error
+            });
+        });
+        /*]]>*/
+    </script>
 </body>
 </html>
