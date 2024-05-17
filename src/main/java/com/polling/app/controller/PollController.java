@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.polling.app.model.Poll;
+import com.polling.app.model.PollResultDTO;
 import com.polling.app.service.PollService;
 
 @RestController
@@ -37,5 +38,11 @@ public class PollController {
         return ResponseEntity.ok(polls);
     }
     
+    @GetMapping("/poll-results")
+    public ResponseEntity<List<PollResultDTO>> getPollResults() {
+        List<PollResultDTO> results = pollService.getPollResults();
+        return ResponseEntity.ok(results);
+    }
+
 }
 

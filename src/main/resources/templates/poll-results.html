@@ -4,16 +4,46 @@
     <meta charset="UTF-8">
     <title>Poll Results</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .poll {
+            margin-bottom: 2rem;
+        }
+        .question {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .option {
+            margin: 0.5rem 0;
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+        }
+        .progress-bar {
+            width: 0;
+            height: 30px;
+            background-color: #4caf50;
+            text-align: right;
+            line-height: 30px;
+            color: white;
+            padding-right: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>Poll Results</h1>
-    <!-- Your HTML content for displaying poll results goes here -->
-    <div th:each="poll : ${polls}">
-        <h2 th:text="${poll.question}"></h2>
-        <!-- Display poll options and vote counts -->
-        <ul>
-            <li th:each="option : ${poll.options}" th:text="${option}"></li>
-        </ul>
+    <div th:each="pollResult : ${pollResults}" class="poll">
+        <div class="question" th:text="${pollResult.question}"></div>
+        <div th:each="option : ${#maps.entrySet(pollResult.optionPercentages)}" class="option">
+            <div th:text="${option.key} + ': ' + option.value + '%'"></div>
+            <div class="progress-container">
+                <div class="progress-bar" th:style="'width:' + ${option.value} + '%'"></div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${pollResults == null}">
+        <p>No poll results available.</p>
     </div>
 </body>
 </html>
