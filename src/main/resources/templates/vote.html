@@ -24,7 +24,6 @@
     </form>
 
     <script th:inline="javascript">
-        /*<![CDATA[*/
         document.getElementById("voteForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent default form submission
 
@@ -54,19 +53,13 @@
                     throw new Error("Failed to submit votes. Please try again later.");
                 }
                 // Parse the JSON response
-                console.log("response json: ", response.json());
-                return response.json();
-            })
-            .then(data => {
-                console.log("Response data:", data); // Handle successful response
+                console.log("response json: ", response.data);
                 alert("Votes submitted successfully!");
-                // Redirect or perform any other action as needed
             })
             .catch(error => {
                 console.error("There was a problem with your fetch operation:", error); // Log the error
             });
         });
-        /*]]>*/
     </script>
 </body>
 </html>

@@ -16,11 +16,10 @@ public class VoteController {
     private VoteService voteService;
 
     @PostMapping("/votes")
-    public ResponseEntity<Void> vote(@RequestBody List<Vote> votes) {
-        voteService.vote(votes);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<Vote>> vote(@RequestBody List<Vote> votes) {
+        List<Vote> savedOptions = voteService.vote(votes);
+        return ResponseEntity.ok().body(savedOptions);
     }
 
-    
 }
 
