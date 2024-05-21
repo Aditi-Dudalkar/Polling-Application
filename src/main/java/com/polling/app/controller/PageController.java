@@ -40,18 +40,26 @@ public class PageController {
         return "polls";
     }
 
-    @GetMapping("/poll-results")
+    @GetMapping("/poll-results-page")
     public String getPollResultsPage(Model model) {
-        System.out.println("Hello /page/poll-results");
+        System.out.println("Hello /page/poll-results-page");
         try {
+            System.out.println("Inside try");
             List<PollResultDTO> pollResults = pollService.getPollResults();
+            System.out.println("pollResults: " + pollResults);
+            pollResults.forEach(pr -> {
+                System.out.println("Question: " + pr.getQuestion());
+                pr.getOptionPercentages().forEach((key, value) -> {
+                    System.out.println("Option: " + key + ", Value: " + value);
+                });
+            });
             model.addAttribute("pollResults", pollResults);
             return "poll-results";
         } catch (Exception e) {
+            System.out.println("Inside catch: An error happened during template parsing");
             e.printStackTrace();
             return "error";
         }
     }
-
 }
 

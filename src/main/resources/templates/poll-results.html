@@ -35,8 +35,8 @@
     <h1>Poll Results</h1>
     <div th:each="pollResult : ${pollResults}" class="poll">
         <div class="question" th:text="${pollResult.question}"></div>
-        <div th:each="option : ${#maps.entrySet(pollResult.optionPercentages)}" class="option">
-            <div th:text="${option.key} + ': ' + option.value + '%'"></div>
+        <div th:each="option : ${pollResult.optionPercentages}" class="option">
+            <div th:text="${option.key + ': ' + option.value + '%'}"></div>
             <div class="progress-container">
                 <div class="progress-bar" th:style="'width:' + ${option.value} + '%'"></div>
             </div>
