@@ -1,27 +1,101 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Vote</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            width: 50%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .scrollable-content {
+            max-height: 400px; /* Adjust the height as needed */
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>Vote</h1>
-    <form id="voteForm" th:action="@{/submit-votes}" method="post">
-        <div id="pollQuestions">
-            <div th:each="poll : ${polls}">
-                <h3 th:text="${poll.question}"></h3>
-                <div th:each="option : ${poll.options}">
-                    <input type="radio" th:id="${option}" th:name="'selectedOptions[' + ${poll.id} + '][selectedOption]'" th:value="${option}">
-                    <label th:for="${option}" th:text="${option}"></label><br>
+    <div class="card">
+        <h1>Vote</h1>
+        <div class="scrollable-content">
+            <form id="voteForm" th:action="@{/submit-votes}" method="post">
+                <div id="pollQuestions">
+                    <div th:each="poll : ${polls}">
+                        <h3 th:text="${poll.question}"></h3>
+                        <div th:each="option : ${poll.options}">
+                            <input type="radio" th:id="${option}" th:name="'selectedOptions[' + ${poll.id} + '][selectedOption]'" th:value="${option}">
+                            <label th:for="${option}" th:text="${option}"></label><br>
+                        </div>
+                        <br>
+                    </div>
                 </div>
                 <br>
-            </div>
+                <label for="voterName">Your Name:</label>
+                <input type="text" id="voterName" name="voterName" required><br><br>
+                <button type="submit">Submit Votes</button>
+            </form>
         </div>
-        <br>
-        <label for="voterName">Your Name:</label>
-        <input type="text" id="voterName" name="voterName" required><br><br>
-        <button type="submit">Submit Votes</button>
-    </form>
+    </div>
 
     <script th:inline="javascript">
         document.getElementById("voteForm").addEventListener("submit", function(event) {

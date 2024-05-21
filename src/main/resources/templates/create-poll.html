@@ -1,71 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Create Poll</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+<style>
+    /* Global styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .card {
+        width: 45%;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    /* Form styles */
+    .form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-input {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .form-button {
+        width: calc(100% - 22px);
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-button:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
 <body>
-    <h1>Create Poll</h1>
-    <form id="pollForm">
-        <label for="question">Question:</label>
-        <input type="text" id="question" name="question" required><br><br>
-        
-        <label for="option1">Option 1:</label>
-        <input type="text" id="option1" name="options" required><br>
-        <label for="option2">Option 2:</label>
-        <input type="text" id="option2" name="options" required><br>
-        <label for="option3">Option 3:</label>
-        <input type="text" id="option3" name="options" required><br>
-        <label for="option4">Option 4:</label>
-        <input type="text" id="option4" name="options" required><br>
-        <!-- You can add more input fields for additional options -->
-        
-        <button type="submit">Create Poll</button>
-    </form>
+    <div class="card">
+        <h1>Create Poll</h1>
+        <form id="pollForm">
+            <label for="question" class="form-label">Question:</label>
+            <input type="text" id="question" name="question" class="form-input" required><br><br>
+            
+            <label for="option1" class="form-label">Option 1:</label>
+            <input type="text" id="option1" name="options" class="form-input" required><br>
+            <label for="option2" class="form-label">Option 2:</label>
+            <input type="text" id="option2" name="options" class="form-input" required><br>
+            <label for="option3" class="form-label">Option 3:</label>
+            <input type="text" id="option3" name="options" class="form-input" required><br>
+            <label for="option4" class="form-label">Option 4:</label>
+            <input type="text" id="option4" name="options" class="form-input" required><br>
+            
+            <button type="submit" class="form-button">Create Poll</button>
+        </form>
+    </div>
 
     <script>
         // Flag to track whether form has been submitted
         let formSubmitted = false;
         document.getElementById("pollForm").addEventListener("submit", function(event) {
-        // Prevent default form submission if not already submitted
-        if (!formSubmitted) {
+            // Prevent default form submission if not already submitted
+            if (!formSubmitted) {
                 event.preventDefault(); // Prevent default form submission
                 formSubmitted = true; // Set flag to true to prevent further submissions
          
-            // Construct JSON data object
-            const formData = {
-                question: document.getElementById("question").value,
-                options: [
-                    document.getElementById("option1").value,
-                    document.getElementById("option2").value,
-                    document.getElementById("option3").value,
-                    document.getElementById("option4").value
-                    // Add more options as needed
-                ]
-            };
+                // Construct JSON data object
+                const formData = {
+                    question: document.getElementById("question").value,
+                    options: [
+                        document.getElementById("option1").value,
+                        document.getElementById("option2").value,
+                        document.getElementById("option3").value,
+                        document.getElementById("option4").value
+                        // Add more options as needed
+                    ]
+                };
 
-            // Send JSON data to backend using Fetch API
-            fetch("/api/polls", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data); // Handle successful response
-            })
-            .catch(error => {
-                console.error("There was a problem with your fetch operation:", error); // Handle error
-            });
-        }
-    });
+                // Send JSON data to backend using Fetch API
+                fetch("/api/polls", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Handle successful response
+                })
+                .catch(error => {
+                    console.error("There was a problem with your fetch operation:", error); // Handle error
+                });
+            }
+        });
     </script>
 </body>
 </html>

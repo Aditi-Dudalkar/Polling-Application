@@ -3,47 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Poll Results</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        .poll {
-            margin-bottom: 2rem;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
+
+        .card {
+            width: 50%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Add scrollbar when content overflows */
+            max-height: 90vh;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .poll {
+            margin-bottom: 20px;
+        }
+
         .question {
             font-size: 1.2rem;
             font-weight: bold;
+            margin-bottom: 10px;
         }
+
         .option {
             margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
         }
+
+        .option-label {
+            width: 30%;
+        }
+
         .progress-container {
-            width: 100%;
+            width: 70%;
             background-color: #f3f3f3;
             border: 1px solid #ccc;
+            height: 20px;
+            border-radius: 5px;
+            position: relative;
+            margin-left: 10px;
         }
+
         .progress-bar {
-            width: 0;
-            height: 30px;
+            height: 100%;
             background-color: #4caf50;
-            text-align: right;
-            line-height: 30px;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 20px;
             color: white;
-            padding-right: 5px;
+            overflow: hidden;
+        }
+
+        .no-results {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Poll Results</h1>
-    <div th:each="pollResult : ${pollResults}" class="poll">
-        <div class="question" th:text="${pollResult.question}"></div>
-        <div th:each="option : ${pollResult.optionPercentages}" class="option">
-            <div th:text="${option.key + ': ' + option.value + '%'}"></div>
-            <div class="progress-container">
-                <div class="progress-bar" th:style="'width:' + ${option.value} + '%'"></div>
+    <div class="card">
+        <h1>Poll Results</h1>
+        <div th:each="pollResult : ${pollResults}" class="poll">
+            <div class="question" th:text="${pollResult.question}"></div>
+            <div th:each="option : ${pollResult.optionPercentages.entrySet()}" class="option">
+                <div class="option-label" th:text="${option.key}"></div>
+                <div class="progress-container">
+                    <div class="progress-bar" th:style="'width:' + ${#numbers.formatDecimal(option.value, 1, 1)} + '%'">
+                        <span th:text="${#numbers.formatDecimal(option.value, 1, 1) + '%'}"></span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div th:if="${pollResults == null}">
-        <p>No poll results available.</p>
+        <div th:if="${pollResults == null}" class="no-results">
+            <p>No poll results available.</p>
+        </div>
     </div>
 </body>
 </html>
