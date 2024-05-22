@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+  <div th:fragment="navbar" class="navbar-container">
+    <style>
+        /* Style for the navbar container */
+        .navbar-container {
+          position: fixed;
+          top: 0;
+          width: 100%;
+        }
+      
+        /* Style for the navbar */
+        .nav.nav-tabs {
+          border-bottom: 1px solid #dee2e6; /* Bootstrap's default border color */
+          background-color: #f8f9fa; /* Bootstrap's default background color */
+          padding: 0.5rem 1rem; /* Adjust as needed */
+          list-style-type: none; /* Remove default list styling */
+          display: flex; /* Use flexbox for layout */
+          justify-content: space-around; /* Adjust as needed */
+        }
+      
+        /* Style for the navbar items */
+        .nav.nav-tabs .nav-item {
+          margin-right: 10px; /* Adjust as needed */
+        }
+      
+        /* Style for the navbar links */
+        .nav.nav-tabs .nav-link {
+          color: #495057; /* Bootstrap's default text color */
+          padding: 0.5rem 1rem; /* Adjust as needed */
+          border: none; /* Remove default border */
+          background: none; /* Remove default background */
+          border-top-left-radius: 0.25rem; /* Adjust as needed */
+          border-top-right-radius: 0.25rem; /* Adjust as needed */
+          border-bottom: 1px solid transparent; /* Hide default bottom border */
+          text-decoration: none; /* Remove default underline */
+        }
+      
+        /* Style for active link */
+        .nav.nav-tabs .nav-item .active .nav-link {
+          border-color: #dee2e6 #dee2e6 #fff; /* Adjust as needed */
+          background-color: #fff; /* Adjust as needed */
+          border-bottom-color: transparent; /* Hide bottom border for active link */
+        }
+      
+        /* Hover effect */
+        .nav.nav-tabs .nav-link:hover {
+          border-color: #dee2e6 #dee2e6 #fff; /* Adjust as needed */
+          background-color: #f8f9fa; /* Adjust as needed */
+          border-bottom-color: transparent; /* Hide bottom border on hover */
+        }
+      </style>
+      
+      <div class="navbar-container">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" th:href="@{/polls}">Polls</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/vote}">Votes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/create-poll}">Create Poll</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/poll-results-page}">Poll Results</a>
+          </li>
+        </ul>
+      </div>      
+    </div>
+   </body>
+</html>
