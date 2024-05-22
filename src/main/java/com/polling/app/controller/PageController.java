@@ -25,16 +25,14 @@ public class PageController {
 
     @GetMapping("/vote")
     public String showVotePage(Model model) {
-        System.out.println("Hello /vote");
         // Fetch all polls with their options from the database
         List<Poll> polls = pollService.getAllPolls();
-        model.addAttribute("polls", polls); // Add the polls list to the model
+        model.addAttribute("polls", polls); 
         return "vote"; 
     }
 
     @GetMapping("/polls")
     public String getAllPolls(Model model) {
-        System.out.println("Hello /polls");
         List<Poll> polls = pollService.getAllPolls();
         model.addAttribute("polls", polls);
         return "polls";
@@ -42,24 +40,9 @@ public class PageController {
 
     @GetMapping("/poll-results-page")
     public String getPollResultsPage(Model model) {
-        System.out.println("Hello /page/poll-results-page");
-        try {
-            System.out.println("Inside try");
             List<PollResultDTO> pollResults = pollService.getPollResults();
-            System.out.println("pollResults: " + pollResults);
-            pollResults.forEach(pr -> {
-                System.out.println("Question: " + pr.getQuestion());
-                pr.getOptionPercentages().forEach((key, value) -> {
-                    System.out.println("Option: " + key + ", Value: " + value);
-                });
-            });
             model.addAttribute("pollResults", pollResults);
             return "poll-results";
-        } catch (Exception e) {
-            System.out.println("Inside catch: An error happened during template parsing");
-            e.printStackTrace();
-            return "error";
-        }
     }
 }
 

@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 </head>
 <style>
-    /* Global styles */
     body {
         font-family: Arial, sans-serif;
         background-color: #f2f2f2;
@@ -33,7 +32,6 @@
         margin-top: 20px;
     }
 
-    /* Form styles */
     .form-label {
         display: block;
         margin-bottom: 5px;
@@ -86,13 +84,11 @@
     </div>
 
     <script>
-        // Flag to track whether form has been submitted
         let formSubmitted = false;
         document.getElementById("pollForm").addEventListener("submit", function(event) {
-            // Prevent default form submission if not already submitted
             if (!formSubmitted) {
-                event.preventDefault(); // Prevent default form submission
-                formSubmitted = true; // Set flag to true to prevent further submissions
+                event.preventDefault(); 
+                formSubmitted = true; 
          
                 // Construct JSON data object
                 const formData = {
@@ -102,7 +98,6 @@
                         document.getElementById("option2").value,
                         document.getElementById("option3").value,
                         document.getElementById("option4").value
-                        // Add more options as needed
                     ]
                 };
 
@@ -121,10 +116,10 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data); // Handle successful response
+                    console.log(data); 
                 })
                 .catch(error => {
-                    console.error("There was a problem with your fetch operation:", error); // Handle error
+                    console.error("There was a problem with your fetch operation:", error); 
                 });
             }
         });

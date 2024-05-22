@@ -6,6 +6,5 @@ import com.polling.app.model.Vote;
 
 @Repository
 public interface VoteRepository extends JpaRepository<Vote, Long> {
-    // You can define custom query methods here if needed
 }
 
